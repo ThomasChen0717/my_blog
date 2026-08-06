@@ -10,6 +10,7 @@ services:
     name: candlelight-blog
     runtime: python
     plan: free
+    rootDir: .
     buildCommand: "./build.sh"
     startCommand: "gunicorn my_blog.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
@@ -21,4 +22,6 @@ services:
         generateValue: true
       - key: WEB_CONCURRENCY
         value: "2"
+      - key: PYTHON_VERSION
+        value: "3.11.9"
     autoDeploy: true
