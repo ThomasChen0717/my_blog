@@ -150,9 +150,9 @@ def add_blog(request):
             if new_tags:
                 tag_names = [t.strip() for t in new_tags.split(',') if t.strip()]
                 for tag_name in tag_names:
-                    tag, _ = Tag.objects.get_or_create(name=tag_name)
+                    tag, created = Tag.objects.get_or_create(name=tag_name)
                     blog.tags.add(tag)
-            
+
             messages.success(request, _('博客发布成功！'))
             return redirect('blog:blog_detail', blog_id=blog.id)
     else:
@@ -234,7 +234,7 @@ def edit_blog(request, blog_id):
             if new_tags:
                 tag_names = [t.strip() for t in new_tags.split(',') if t.strip()]
                 for tag_name in tag_names:
-                    tag, _ = Tag.objects.get_or_create(name=tag_name)
+                    tag, created = Tag.objects.get_or_create(name=tag_name)
                     blog.tags.add(tag)
             
             messages.success(request, _('博客修改成功！'))
