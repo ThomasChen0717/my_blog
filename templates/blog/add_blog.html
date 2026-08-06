@@ -175,7 +175,7 @@
     });
 
     // 表单提交时同步标签到隐藏输入
-    const form = document.querySelector('form');
+    const form = document.querySelector('form[enctype="multipart/form-data"]');
     if (form) {
         form.addEventListener('submit', function() {
             input.value = tags.join(', ');
