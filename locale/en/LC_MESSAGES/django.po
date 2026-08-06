@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#"Language: en\n"
+# "Language: en\n"
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-06 09:31+0800\n"
+"POT-Creation-Date: 2026-08-06 10:19+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,39 +62,47 @@ msgstr "Enter content"
 msgid "请输入摘要（可选）"
 msgstr "Enter summary (optional)"
 
-#: blog/forms.py:77 templates/blog/profile.html:14
+#: blog/forms.py:77
+msgid "昵称"
+msgstr "Nickname"
+
+#: blog/forms.py:78 templates/blog/profile.html:13
 msgid "头像"
 msgstr "Avatar"
 
-#: blog/forms.py:78
+#: blog/forms.py:79
 msgid "生日"
 msgstr "Birthday"
 
-#: blog/forms.py:79
+#: blog/forms.py:80
 msgid "性别"
 msgstr "Gender"
 
-#: blog/forms.py:80
+#: blog/forms.py:81
 msgid "城市"
 msgstr "City"
 
-#: blog/forms.py:81
+#: blog/forms.py:82
 msgid "工作"
 msgstr "Occupation"
 
-#: blog/forms.py:82
+#: blog/forms.py:83
 msgid "个人简介"
 msgstr "Bio"
 
-#: blog/forms.py:87
+#: blog/forms.py:86
+msgid "请输入昵称（默认与登录名相同）"
+msgstr "Enter nickname (default: same as login name)"
+
+#: blog/forms.py:89
 msgid "请输入所在城市"
 msgstr "Enter your city"
 
-#: blog/forms.py:88
+#: blog/forms.py:90
 msgid "请输入职业"
 msgstr "Enter your occupation"
 
-#: blog/forms.py:89
+#: blog/forms.py:91
 msgid "介绍一下自己吧"
 msgstr "Tell us about yourself"
 
@@ -1362,7 +1370,7 @@ msgstr ""
 msgid "发布博客"
 msgstr "Publish Blog"
 
-#: templates/blog/add_blog.html:10 templates/blog/profile.html:58
+#: templates/blog/add_blog.html:10 templates/blog/profile.html:57
 msgid "发布新博客"
 msgstr "Create New Blog"
 
@@ -1379,7 +1387,7 @@ msgid "添加"
 msgstr "Add"
 
 #: templates/blog/add_blog.html:94 templates/blog/delete_blog.html:28
-#: templates/blog/edit_blog.html:94 templates/blog/profile.html:129
+#: templates/blog/edit_blog.html:94 templates/blog/profile.html:128
 msgid "取消"
 msgstr "Cancel"
 
@@ -1407,7 +1415,7 @@ msgstr "Logout"
 msgid "登录"
 msgstr "Login"
 
-#: templates/blog/base.html:85 templates/blog/profile.html:110
+#: templates/blog/base.html:85 templates/blog/profile.html:109
 msgid "关闭"
 msgstr "Close"
 
@@ -1467,7 +1475,7 @@ msgstr "Tags:"
 msgid "浏览量："
 msgstr "Views:"
 
-#: templates/blog/edit_blog.html:4 templates/blog/profile.html:85
+#: templates/blog/edit_blog.html:4 templates/blog/profile.html:84
 msgid "编辑"
 msgstr "Edit"
 
@@ -1595,69 +1603,69 @@ msgid "前往注册"
 msgstr "Sign Up"
 
 #: templates/blog/profile.html:4
-#, python-format
 msgid "的主页"
 msgstr "'s Homepage"
 
-#: templates/blog/profile.html:21
+#: templates/blog/profile.html:20
 #, python-format
 msgid "已发布 %(blog_count)s 篇博客"
 msgstr "%(blog_count)s blog(s) published"
 
-#: templates/blog/profile.html:25
+#: templates/blog/profile.html:24
 msgid "► 生日："
 msgstr "► Birthday:"
 
-#: templates/blog/profile.html:28
+#: templates/blog/profile.html:27
 msgid "► 性别："
 msgstr "► Gender:"
 
-#: templates/blog/profile.html:31
+#: templates/blog/profile.html:30
 msgid "► 城市："
 msgstr "► City:"
 
-#: templates/blog/profile.html:34
+#: templates/blog/profile.html:33
 msgid "► 工作："
 msgstr "► Occupation:"
 
-#: templates/blog/profile.html:37
+#: templates/blog/profile.html:36
 msgid "► 简介："
 msgstr "► Bio:"
 
-#: templates/blog/profile.html:39
+#: templates/blog/profile.html:38
 msgid "► 注册时间："
 msgstr "► Joined:"
 
-#: templates/blog/profile.html:46 templates/blog/profile.html:109
+#: templates/blog/profile.html:45 templates/blog/profile.html:108
 msgid "编辑个人资料"
 msgstr "Edit Profile"
 
-#: templates/blog/profile.html:56
-#, python-format
-msgid "%(profile_user.username)s 的博客"
-msgstr "%(profile_user.username)s's Blog"
+#: templates/blog/profile.html:55
+#, fuzzy
+#| msgid "博客"
+msgid "的博客"
+msgstr "Blog"
 
-#: templates/blog/profile.html:80
+#: templates/blog/profile.html:79
 msgid "views"
 msgstr "views"
 
-#: templates/blog/profile.html:83
+#: templates/blog/profile.html:82
 msgid "查看"
 msgstr "View"
 
-#: templates/blog/profile.html:86
+#: templates/blog/profile.html:85
 msgid "删除"
 msgstr "Delete"
 
-#: templates/blog/profile.html:93
+#: templates/blog/profile.html:92
 msgid "还没有发布任何博客。"
 msgstr "No blogs published yet."
 
-#: templates/blog/profile.html:95
+#: templates/blog/profile.html:94
 msgid "立即发布第一篇"
 msgstr "Publish Your First Blog"
 
-#: templates/blog/profile.html:130
+#: templates/blog/profile.html:129
 msgid "保存资料"
 msgstr "Save Profile"
 
@@ -1684,3 +1692,7 @@ msgstr "Already have an account?"
 #: templates/blog/register.html:110
 msgid "前往登录"
 msgstr "Sign In"
+
+#, python-format
+#~ msgid "%(profile_user.username)s 的博客"
+#~ msgstr "%(profile_user.username)s's Blog"

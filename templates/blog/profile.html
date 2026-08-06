@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load static i18n %}
 
-{% block title %}⟨ {{ profile_user.username }} ⟩ {% trans "的主页" %}{% endblock %}
+{% block title %}⟨ {{ profile_obj.get_display_name }} ⟩ {% trans "的主页" %}{% endblock %}
 {% block content %}
 <div class="container mt-4">
     <div class="row">
@@ -13,10 +13,10 @@
                         <img src="{{ profile_obj.avatar.url }}" class="rounded-circle mb-3" width="120" height="120" alt="{% trans '头像' %}">
                     {% else %}
                         <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width:120px;height:120px;font-size:3rem;">
-                            {{ profile_user.username|first|upper }}
+                            {{ profile_obj.get_display_name|first|upper }}
                         </div>
                     {% endif %}
-                    <h4 class="tech-glow">{{ profile_user.username }}</h4>
+                    <h4 class="tech-glow">{{ profile_obj.get_display_name }}</h4>
                     <p class="text-muted mb-0">// {% blocktrans %}已发布 {{ blog_count }} 篇博客{% endblocktrans %}</p>
                 </div>
                 <ul class="list-group list-group-flush">
@@ -52,7 +52,7 @@
         {# 右侧：博客列表 #}
         <div class="col-md-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="tech-glow">// {{ profile_user.username }}{% trans "的博客" %}</h3>
+                <h3 class="tech-glow">// {{ profile_obj.get_display_name }}{% trans "的博客" %}</h3>
                 {% if is_owner %}
                     <a href="{% url 'blog:add_blog' %}" class="btn btn-primary">⚡ {% trans "发布新博客" %}</a>
                 {% endif %}

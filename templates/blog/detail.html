@@ -17,7 +17,7 @@
                     <hr>
                 {% endif %}
                 <p>
-                    <strong><a href="{% url 'blog:user_profile' blog.author.id %}">{{ blog.author }}</a></strong>
+                    <strong><a href="{% url 'blog:user_profile' blog.author.id %}">{{ blog.author.profile.get_display_name }}</a></strong>
                     &nbsp;&nbsp;&nbsp;&nbsp;{{ blog.created_time|date:'Y年m月d日' }}
                     &nbsp;&nbsp;&nbsp;&nbsp;{% trans "分类：" %}
                     {% if blog.category %}

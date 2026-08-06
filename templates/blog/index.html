@@ -108,7 +108,7 @@
                             </div>
                         {% endif %}
                         <p class="text-muted">
-                            {% trans "作者：" %}<a href="{% url 'blog:user_profile' blog.author.id %}">{{ blog.author.username }}</a> | 
+                            {% trans "作者：" %}<a href="{% url 'blog:user_profile' blog.author.id %}">{{ blog.author.profile.get_display_name }}</a> |
                             {% trans "发布时间：" %}{{ blog.created_time|date:"Y-m-d" }} |
                             {% trans "访问量：" %}{{ blog.visitors }}
                         </p>

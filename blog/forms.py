@@ -72,8 +72,9 @@ class BlogForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('avatar', 'birthday', 'gender', 'city', 'occupation', 'bio')
+        fields = ('nickname', 'avatar', 'birthday', 'gender', 'city', 'occupation', 'bio')
         labels = {
+            'nickname': _('昵称'),
             'avatar': _('头像'),
             'birthday': _('生日'),
             'gender': _('性别'),
@@ -82,6 +83,7 @@ class ProfileForm(forms.ModelForm):
             'bio': _('个人简介'),
         }
         widgets = {
+            'nickname': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('请输入昵称（默认与登录名相同）')}),
             'birthday': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'gender': forms.RadioSelect(attrs={'class': 'radio-select'}),
             'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('请输入所在城市')}),

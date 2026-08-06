@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save, pre_save
 
 
 GENDER_CHOICES = [
@@ -11,6 +13,7 @@ GENDER_CHOICES = [
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile', verbose_name='用户')
+    nickname = models.CharField(max_length=50, blank=True, null=True, verbose_name='昵称')
     avatar = models.ImageField(upload_to='avatars', null=True, blank=True, verbose_name='头像')
     birthday = models.DateField(null=True, blank=True, verbose_name='生日')
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='U', verbose_name='性别')
@@ -19,11 +22,25 @@ class UserProfile(models.Model):
     bio = models.TextField(max_length=500, null=True, blank=True, verbose_name='个人简介')
 
     def __str__(self):
-        return f'{self.user.username} 的资料'
+        return f'{self.get_display_name()} 的资料'
+
+    def get_display_name(self):
+        """优先返回昵称，否则返回 username"""
+        return self.nickname if self.nickname else self.user.username
 
     class Meta:
         verbose_name = '用户资料'
         verbose_name_plural = verbose_name
+
+
+@receiver(post_save, sender=User)
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    """用户创建时自动创建资料，nickname 默认为 username"""
+    if created:
+        UserProfile.objects.get_or_create(user=instance, defaults={'nickname': instance.username})
+    else:
+        # 保存时如果 profile 不存在则创建
+        UserProfile.objects.get_or_create(user=instance)
 
 
 class Category(models.Model): 
