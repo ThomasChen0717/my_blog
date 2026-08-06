@@ -1,0 +1,1628 @@
+/* ========================================
+   Tech Theme - 多彩科技感主题
+   深色背景 + 霓虹多彩 + 高对比度
+   ======================================== */
+
+/* 全局变量 - 多彩配色方案 */
+:root {
+    --tech-bg: #080810;
+    --tech-bg-card: rgba(15, 18, 35, 0.92);
+    --tech-bg-nav: rgba(12, 14, 28, 0.95);
+    
+    /* 主色调 - 多彩霓虹 */
+    --tech-green: #00ff88;
+    --tech-green-dim: #00cc6a;
+    --tech-cyan: #00d9ff;
+    --tech-purple: #b464ff;
+    --tech-pink: #ff50c8;
+    --tech-blue: #4a9eff;
+    
+    /* 文字颜色 - 高对比度 */
+    --tech-text: #e8f0ff;
+    --tech-text-bright: #ffffff;
+    --tech-text-dim: #9aa5c8;
+    --tech-text-muted: #6b7299;
+    
+    /* 边框和发光 */
+    --tech-border: rgba(0, 217, 255, 0.25);
+    --tech-border-green: rgba(0, 255, 136, 0.3);
+    --tech-border-purple: rgba(180, 100, 255, 0.3);
+    
+    /* 发光效果 */
+    --tech-glow-green: 0 0 10px rgba(0, 255, 136, 0.5);
+    --tech-glow-cyan: 0 0 10px rgba(0, 217, 255, 0.5);
+    --tech-glow-purple: 0 0 10px rgba(180, 100, 255, 0.5);
+    --tech-glow-pink: 0 0 10px rgba(255, 80, 200, 0.5);
+    
+    /* 功能色 */
+    --tech-success: #00ff88;
+    --tech-warning: #ffaa00;
+    --tech-danger: #ff4466;
+    --tech-info: #00d9ff;
+}
+
+/* 全局背景 */
+body {
+    background-color: var(--tech-bg);
+    background-image: 
+        radial-gradient(ellipse at 15% 20%, rgba(0, 217, 255, 0.06) 0%, transparent 40%),
+        radial-gradient(ellipse at 85% 30%, rgba(180, 100, 255, 0.06) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(255, 80, 200, 0.04) 0%, transparent 40%);
+    color: var(--tech-text);
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* 代码雨背景画布 - 提高可见度 */
+#matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.85;
+}
+
+/* 主内容覆盖层 - 更透明让内容可见 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        rgba(8, 8, 16, 0.35) 0%, 
+        rgba(8, 8, 16, 0.55) 50%,
+        rgba(8, 8, 16, 0.75) 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container, .container-fluid {
+    position: relative;
+    z-index: 1;
+}
+
+/* ========================================
+   导航栏
+   ======================================== */
+.navbar {
+    background: var(--tech-bg-nav) !important;
+    border-bottom: 1px solid var(--tech-border) !important;
+    box-shadow: 0 2px 30px rgba(0, 217, 255, 0.15), 0 0 50px rgba(180, 100, 255, 0.1) !important;
+    backdrop-filter: blur(15px);
+}
+
+.navbar-brand {
+    background: linear-gradient(135deg, #00eaff 0%, #c478ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(0, 217, 255, 0.6);
+    filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.5));
+}
+
+.navbar a {
+    color: var(--tech-text) !important;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link {
+    color: var(--tech-text-dim) !important;
+    font-size: 15px !important;
+    letter-spacing: 0.5px;
+}
+
+/* hover 和 active 样式在 blog_nav.css 中定义 */
+
+/* 导航栏按钮 - 统一样式在 blog_nav.css 中定义 */
+.navbar .btn-link {
+    color: var(--tech-text-dim) !important;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* 搜索框 */
+.navbar .form-control {
+    background: rgba(20, 25, 50, 0.8) !important;
+    border: 1px solid var(--tech-border) !important;
+    color: var(--tech-text-bright) !important;
+    border-radius: 6px;
+}
+
+.navbar .form-control:focus {
+    background: rgba(30, 35, 60, 0.9) !important;
+    border-color: var(--tech-cyan) !important;
+    box-shadow: 0 0 12px rgba(0, 217, 255, 0.3) !important;
+    outline: none;
+}
+
+.navbar .form-control::placeholder {
+    color: var(--tech-text-muted);
+}
+
+/* 语言切换器 - 图标按钮 */
+.lang-dropdown-wrapper {
+    position: relative;
+}
+
+.lang-icon-btn {
+    padding: 0 !important;
+    font-size: 20px;
+    background: transparent !important;
+    border: none;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--tech-text-dim) !important;
+    transition: all 0.3s ease;
+    border-radius: 0;
+}
+
+.lang-icon-btn:hover {
+    color: var(--tech-text-bright) !important;
+    background: linear-gradient(180deg, rgba(0, 217, 255, 0.25) 0%, rgba(180, 100, 255, 0.25) 100%);
+    box-shadow: inset 0 0 20px rgba(0, 217, 255, 0.2);
+}
+
+.lang-menu {
+    background: var(--tech-bg-card);
+    border: 1px solid var(--tech-border);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 217, 255, 0.1);
+    padding: 4px;
+    min-width: 160px;
+}
+
+.lang-menu li {
+    display: block;
+}
+
+.lang-menu form {
+    display: block;
+    margin: 0;
+}
+
+.lang-menu .dropdown-item {
+    color: var(--tech-text);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lang-menu .dropdown-item:hover {
+    background: rgba(0, 217, 255, 0.15);
+    color: var(--tech-text-bright);
+}
+
+.lang-menu .dropdown-item.active {
+    background: linear-gradient(135deg, var(--tech-cyan), var(--tech-purple));
+    color: #fff;
+}
+
+/* ========================================
+   卡片样式
+   ======================================== */
+.card {
+    background: var(--tech-bg-card) !important;
+    border: 1px solid var(--tech-border) !important;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 217, 255, 0.08);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    border-color: var(--tech-cyan) !important;
+    box-shadow: 0 6px 30px rgba(0, 217, 255, 0.15), 0 0 25px rgba(180, 100, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background: linear-gradient(90deg, rgba(0, 217, 255, 0.15) 0%, rgba(180, 100, 255, 0.1) 100%) !important;
+    border-bottom: 1px solid var(--tech-border) !important;
+    color: var(--tech-text-bright) !important;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.card-title {
+    color: var(--tech-text-bright) !important;
+    font-weight: 600;
+}
+
+.card-text {
+    color: var(--tech-text) !important;
+}
+
+/* ========================================
+   按钮 - 多彩风格
+   ======================================== */
+.btn-primary {
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%) !important;
+    border: none !important;
+    color: white !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #00eaff 0%, #c478ff 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 20px rgba(0, 217, 255, 0.4), 0 4px 30px rgba(180, 100, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+    background: transparent !important;
+    border: 1px solid var(--tech-cyan) !important;
+    color: var(--tech-cyan) !important;
+}
+
+.btn-outline-primary:hover {
+    background: var(--tech-cyan) !important;
+    color: var(--tech-bg) !important;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--tech-green) 0%, #00cc6a 100%) !important;
+    border: none !important;
+    color: var(--tech-bg) !important;
+}
+
+.btn-success:hover {
+    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid var(--tech-text-dim) !important;
+    color: var(--tech-text) !important;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: var(--tech-text-bright) !important;
+}
+
+.btn-danger, .btn-outline-danger {
+    background: transparent !important;
+    border: 1px solid var(--tech-danger) !important;
+    color: var(--tech-danger) !important;
+}
+
+.btn-danger:hover, .btn-outline-danger:hover {
+    background: var(--tech-danger) !important;
+    color: white !important;
+    box-shadow: 0 4px 20px rgba(255, 68, 102, 0.4);
+}
+
+.btn-warning, .btn-outline-warning {
+    background: transparent !important;
+    border: 1px solid var(--tech-warning) !important;
+    color: var(--tech-warning) !important;
+}
+
+.btn-warning:hover, .btn-outline-warning:hover {
+    background: var(--tech-warning) !important;
+    color: var(--tech-bg) !important;
+    box-shadow: 0 4px 20px rgba(255, 170, 0, 0.4);
+}
+
+.btn-info {
+    background: transparent !important;
+    border: 1px solid var(--tech-info) !important;
+    color: var(--tech-info) !important;
+}
+
+.btn-info:hover {
+    background: var(--tech-info) !important;
+    color: var(--tech-bg) !important;
+}
+
+/* ========================================
+   表单
+   ======================================== */
+.form-control, .form-select {
+    background: rgba(20, 25, 50, 0.8) !important;
+    border: 1px solid var(--tech-border) !important;
+    color: var(--tech-text-bright) !important;
+    border-radius: 6px;
+    font-family: inherit;
+}
+
+.form-control:focus, .form-select:focus {
+    background: rgba(30, 35, 60, 0.9) !important;
+    border-color: var(--tech-cyan) !important;
+    box-shadow: 0 0 12px rgba(0, 217, 255, 0.3) !important;
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: var(--tech-text-muted);
+}
+
+.form-label {
+    color: var(--tech-text-bright) !important;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.form-text {
+    color: var(--tech-text-dim) !important;
+}
+
+.form-select option {
+    background: var(--tech-bg);
+    color: var(--tech-text);
+}
+
+/* ========================================
+   徽章/标签 - 多彩
+   ======================================== */
+.badge.bg-info {
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-blue) 100%) !important;
+    color: var(--tech-bg) !important;
+}
+
+.badge.bg-secondary {
+    background: linear-gradient(135deg, var(--tech-purple) 0%, #7733cc 100%) !important;
+    color: white !important;
+}
+
+.badge {
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* ========================================
+   列表组
+   ======================================== */
+.list-group-item {
+    background: transparent !important;
+    border-color: var(--tech-border) !important;
+    color: var(--tech-text) !important;
+}
+
+/* ========================================
+   页面标题
+   ======================================== */
+h1, h2, h3, h4, h5 {
+    color: var(--tech-text-bright);
+    letter-spacing: 0.5px;
+}
+
+.tech-glow {
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ========================================
+   文本颜色
+   ======================================== */
+.text-muted {
+    color: var(--tech-text-dim) !important;
+}
+
+.text-success {
+    color: var(--tech-success) !important;
+}
+
+/* ========================================
+   提示框
+   ======================================== */
+.alert {
+    background: var(--tech-bg-card) !important;
+    border: 1px solid var(--tech-border) !important;
+    color: var(--tech-text-bright) !important;
+}
+
+.alert-success {
+    border-color: var(--tech-success) !important;
+    color: var(--tech-success) !important;
+}
+
+.alert-error, .alert-danger {
+    border-color: var(--tech-danger) !important;
+    color: var(--tech-danger) !important;
+}
+
+.alert-warning {
+    border-color: var(--tech-warning) !important;
+    color: var(--tech-warning) !important;
+}
+
+/* ========================================
+   分割线
+   ======================================== */
+hr {
+    border: none;
+    border-top: 1px solid var(--tech-border);
+    margin: 20px 0;
+}
+
+/* ========================================
+   页脚 - 深色科技风
+   ======================================== */
+footer {
+    background: linear-gradient(180deg, rgba(8, 8, 16, 0.85) 0%, rgba(12, 14, 28, 0.95) 100%) !important;
+    border-top: 1px solid var(--tech-border) !important;
+    box-shadow: 0 -2px 20px rgba(0, 217, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+}
+
+footer .nav-link {
+    color: var(--tech-text-dim) !important;
+    transition: all 0.3s ease;
+}
+
+footer .nav-link:hover {
+    color: var(--tech-cyan) !important;
+}
+
+footer p {
+    color: var(--tech-text-muted) !important;
+}
+
+/* ========================================
+   滚动条
+   ======================================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--tech-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--tech-cyan) 0%, var(--tech-purple) 100%);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #00eaff 0%, #c478ff 100%);
+}
+
+/* ========================================
+   链接
+   ======================================== */
+a {
+    color: var(--tech-cyan);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--tech-purple);
+}
+
+/* ========================================
+   图片
+   ======================================== */
+img {
+    border-radius: 6px;
+    border: 1px solid var(--tech-border);
+}
+
+/* ========================================
+   代码高亮区
+   ======================================== */
+.blog-content, pre, code {
+    color: var(--tech-text);
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+pre {
+    background: rgba(15, 18, 35, 0.9) !important;
+    border: 1px solid var(--tech-border) !important;
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+}
+
+code {
+    background: rgba(0, 217, 255, 0.1) !important;
+    color: var(--tech-cyan) !important;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* ========================================
+   进度条
+   ======================================== */
+.progress {
+    background: var(--tech-bg-card) !important;
+    border: 1px solid var(--tech-border);
+    border-radius: 4px;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--tech-cyan) 0%, var(--tech-purple) 100%) !important;
+}
+
+/* ========================================
+   工具类
+   ======================================== */
+.tech-glow-text {
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 50%, var(--tech-pink) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tech-border {
+    border: 1px solid var(--tech-cyan);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+}
+
+.tech-gradient-text {
+    background: linear-gradient(135deg, var(--tech-cyan), var(--tech-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ========================================
+   ProfileForm 性别选择 - 原生样式 + 主题色
+   BlogForm 分类/标签 - 按钮风格（见第 973 行 .blog-category-select / .blog-tags-select）
+   ======================================== */
+
+/* 性别 radio-select */
+ul.radioselect,
+.radio-select {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+ul.radioselect li,
+.radio-select li {
+    margin: 0 !important;
+    padding: 0;
+}
+
+ul.radioselect label,
+.radio-select label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    color: var(--tech-text-bright) !important;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+ul.radioselect label:hover,
+.radio-select label:hover {
+    background: transparent;
+    border-color: transparent;
+    transform: none;
+}
+
+/* 性别单选按钮 - 原生外观 + 主题色 */
+.radio-select input[type="radio"],
+ul.radioselect input[type="radio"] {
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    position: static;
+    opacity: 1;
+    width: 16px;
+    height: 16px;
+    pointer-events: auto;
+    accent-color: var(--tech-cyan);
+    cursor: pointer;
+}
+
+/* 通用 label 颜色修复 */
+label {
+    color: var(--tech-text-bright) !important;
+}
+
+/* ========================================
+   自定义技术风格下拉菜单
+   ======================================== */
+.tech-toolbar {
+    border-color: var(--tech-border) !important;
+    position: relative;
+    z-index: 100;
+}
+
+.tech-toolbar .card-body {
+    position: relative;
+    overflow: visible !important;
+}
+
+.tech-input-group {
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--tech-border);
+}
+
+.tech-search-input {
+    background: rgba(20, 25, 50, 0.9) !important;
+    border: none !important;
+    color: var(--tech-text-bright) !important;
+    padding: 12px 16px;
+    font-size: 15px;
+}
+
+.tech-search-input:focus {
+    box-shadow: none !important;
+    background: rgba(30, 35, 60, 0.95) !important;
+}
+
+.tech-search-input::placeholder {
+    color: var(--tech-text-muted);
+}
+
+.tech-search-btn {
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%) !important;
+    border: none !important;
+    color: white !important;
+    padding: 12px 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.tech-search-btn:hover {
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+/* 自定义下拉菜单容器 */
+.tech-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.tech-dropdown-toggle {
+    width: 100%;
+    background: rgba(20, 25, 50, 0.7);
+    border: 1px solid var(--tech-border);
+    color: var(--tech-text-bright);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.tech-dropdown-toggle:hover {
+    background: rgba(0, 217, 255, 0.15);
+    border-color: var(--tech-cyan);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
+}
+
+.tech-dropdown-toggle[data-open="true"] {
+    background: rgba(0, 217, 255, 0.2);
+    border-color: var(--tech-cyan);
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+}
+
+.tech-dropdown-label {
+    flex: 1;
+    text-align: left;
+}
+
+.tech-dropdown-arrow {
+    transition: transform 0.3s ease;
+    font-size: 12px;
+    color: var(--tech-cyan);
+}
+
+.tech-dropdown-toggle[data-open="true"] .tech-dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* 下拉菜单选项 */
+.tech-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: rgba(15, 18, 35, 0.98);
+    border: 1px solid var(--tech-border);
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 217, 255, 0.15);
+    z-index: 9999;
+    max-height: 240px;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.tech-dropdown[data-open="true"] .tech-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.tech-dropdown-item {
+    display: block;
+    padding: 10px 16px;
+    color: var(--tech-text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+}
+
+.tech-dropdown-item:hover {
+    background: rgba(0, 217, 255, 0.1);
+    color: var(--tech-text-bright);
+    border-left-color: var(--tech-cyan);
+}
+
+.tech-dropdown-item.active {
+    background: linear-gradient(90deg, rgba(0, 217, 255, 0.2) 0%, transparent 100%);
+    color: var(--tech-cyan);
+    border-left-color: var(--tech-cyan);
+    font-weight: 600;
+}
+
+/* 下拉菜单滚动条 */
+.tech-dropdown-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tech-dropdown-menu::-webkit-scrollbar-track {
+    background: rgba(20, 25, 50, 0.5);
+    border-radius: 3px;
+}
+
+.tech-dropdown-menu::-webkit-scrollbar-thumb {
+    background: var(--tech-cyan);
+    border-radius: 3px;
+}
+
+/* 清除按钮 - 红色风格 */
+.tech-clear-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    background: rgba(220, 53, 69, 0.15);
+    border: 1px solid #dc3545;
+    border-radius: 6px;
+    color: #ff6b6b;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.tech-clear-btn:hover {
+    background: rgba(220, 53, 69, 0.3);
+    border-color: #ff6b6b;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(220, 53, 69, 0.4);
+}
+
+.tech-clear-btn.active {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    border-color: #dc3545;
+    color: #fff;
+    box-shadow: 0 0 16px rgba(220, 53, 69, 0.6);
+}
+
+/* ========================================
+   模态框 - 科技风格
+   ======================================== */
+.tech-modal .modal-content {
+    background: var(--tech-bg-card) !important;
+    border: 1px solid var(--tech-border) !important;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 217, 255, 0.2);
+    backdrop-filter: blur(15px);
+    color: var(--tech-text-bright) !important;
+}
+
+.tech-modal .modal-header {
+    background: linear-gradient(90deg, rgba(0, 217, 255, 0.15) 0%, rgba(180, 100, 255, 0.1) 100%);
+    border-bottom: 1px solid var(--tech-border);
+    padding: 16px 24px;
+    color: var(--tech-text-bright) !important;
+}
+
+.tech-modal .modal-title {
+    color: var(--tech-text-bright);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.tech-modal .modal-body {
+    padding: 24px;
+    color: var(--tech-text-bright) !important;
+}
+
+.tech-modal .modal-footer {
+    color: var(--tech-text-bright) !important;
+}
+
+.tech-modal .btn-close {
+    filter: brightness(0) saturate(100%) invert(72%) sepia(93%) saturate(2000%) hue-rotate(149deg) brightness(106%) contrast(101%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.tech-modal .btn-close:hover {
+    filter: brightness(0) saturate(100%) invert(72%) sepia(93%) saturate(2000%) hue-rotate(149deg) brightness(130%) contrast(101%);
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* 模态框背景遮罩 */
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(4px);
+}
+
+/* 编辑资料按钮 */
+.tech-edit-btn {
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%) !important;
+    border: none !important;
+    color: white !important;
+    padding: 12px 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.tech-edit-btn:hover {
+    box-shadow: 0 4px 20px rgba(0, 217, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+/* 表单在模态框中的样式 */
+.tech-modal .form-label {
+    color: var(--tech-text-bright) !important;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.tech-modal .form-control,
+.tech-modal .form-select {
+    background: rgba(20, 25, 50, 0.8) !important;
+    border: 1px solid var(--tech-border) !important;
+    color: var(--tech-text-bright) !important;
+}
+
+.tech-modal .form-control:focus,
+.tech-modal .form-select:focus {
+    background: rgba(30, 35, 60, 0.9) !important;
+    border-color: var(--tech-cyan) !important;
+    box-shadow: 0 0 12px rgba(0, 217, 255, 0.3) !important;
+}
+
+/* ========================================
+   Django 表单组件样式修复
+   ======================================== */
+
+/* TechClearableFileInput - 白色文字 */
+.tech-file-input {
+    color: #ffffff !important;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.tech-file-input * {
+    color: #ffffff !important;
+}
+
+.tech-file-input a {
+    color: var(--tech-cyan) !important;
+}
+
+.tech-file-input label {
+    color: #ffffff !important;
+    display: inline !important;
+}
+
+/* 原生 file input 显示文字 */
+.tech-file-input input[type="file"] {
+    color: #ffffff !important;
+    color-scheme: dark !important;
+}
+
+.tech-file-input input[type="file"]::file-selector-button {
+    color: #ffffff !important;
+}
+
+/* ProfileForm avatar file input fallback */
+.fileinput,
+.widget-clearablefileinput {
+    color: #ffffff !important;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.widget-clearablefileinput,
+.widget-clearablefileinput *,
+.fileinput,
+.fileinput * {
+    color: #ffffff !important;
+}
+
+.widget-clearablefileinput a,
+.fileinput a {
+    color: var(--tech-cyan) !important;
+}
+
+.widget-clearablefileinput label,
+.fileinput label {
+    color: #ffffff !important;
+    display: inline !important;
+}
+
+.fileinput input[type="file"],
+.widget-clearablefileinput input[type="file"] {
+    color: #ffffff !important;
+    color-scheme: dark !important;
+}
+
+/* 日历图标颜色修复 - 强制暗色主题 + 自定义青色图标 */
+.tech-modal input[type="date"],
+.tech-modal input[type="datetime-local"],
+.tech-modal input[type="time"],
+.tech-modal input[type="month"],
+.tech-modal input[type="week"] {
+    color-scheme: dark !important;
+}
+
+/* 隐藏原生图标，使用自定义 SVG 背景 */
+.tech-modal input[type="date"]::-webkit-calendar-picker-indicator,
+.tech-modal input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+.tech-modal input[type="time"]::-webkit-calendar-picker-indicator,
+.tech-modal input[type="month"]::-webkit-calendar-picker-indicator,
+.tech-modal input[type="week"]::-webkit-calendar-picker-indicator {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2300d9ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.tech-modal input[type="date"]::-webkit-calendar-picker-indicator:hover,
+.tech-modal input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2300ff88' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+    filter: drop-shadow(0 0 6px rgba(0, 217, 255, 0.8));
+}
+
+/* 全局日期输入框也应用暗色主题 */
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+input[type="month"],
+input[type="week"] {
+    color-scheme: dark !important;
+}
+
+/* ========================================
+   博客分类和标签 - 按钮风格
+   分类：单选，每个颜色不同
+   标签：多选，每个颜色不同
+   ======================================== */
+
+/* 隐藏原生 input */
+.blog-category-select input[type="radio"],
+.blog-tags-select input[type="checkbox"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    margin: 0 !important;
+}
+
+/* 分类按钮组 - 每个按钮默认带颜色预览 */
+.blog-category-select {
+    display: flex !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    margin-bottom: 16px !important;
+}
+
+.blog-category-select > div {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.blog-category-select label {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 10px 20px !important;
+    background: rgba(20, 25, 50, 0.6) !important;
+    border: 1px solid var(--tech-border) !important;
+    border-radius: 8px !important;
+    color: var(--tech-text-bright) !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 14px !important;
+}
+
+/* 分类默认状态 - 每个按钮用对应颜色边框 */
+.blog-category-select > div:nth-child(1) label {
+    border-color: rgba(0, 217, 255, 0.5) !important;
+}
+.blog-category-select > div:nth-child(2) label {
+    border-color: rgba(180, 100, 255, 0.5) !important;
+}
+.blog-category-select > div:nth-child(3) label {
+    border-color: rgba(255, 107, 157, 0.5) !important;
+}
+.blog-category-select > div:nth-child(4) label {
+    border-color: rgba(255, 217, 61, 0.5) !important;
+}
+.blog-category-select > div:nth-child(5) label {
+    border-color: rgba(0, 255, 136, 0.5) !important;
+}
+.blog-category-select > div:nth-child(6) label {
+    border-color: rgba(255, 107, 107, 0.5) !important;
+}
+
+.blog-category-select label:hover {
+    transform: translateY(-2px) !important;
+}
+
+.blog-category-select > div:nth-child(1) label:hover {
+    background: rgba(0, 217, 255, 0.12) !important;
+    border-color: #00d9ff !important;
+}
+.blog-category-select > div:nth-child(2) label:hover {
+    background: rgba(180, 100, 255, 0.12) !important;
+    border-color: #b464ff !important;
+}
+.blog-category-select > div:nth-child(3) label:hover {
+    background: rgba(255, 107, 157, 0.12) !important;
+    border-color: #ff6b9d !important;
+}
+.blog-category-select > div:nth-child(4) label:hover {
+    background: rgba(255, 217, 61, 0.12) !important;
+    border-color: #ffd93d !important;
+}
+.blog-category-select > div:nth-child(5) label:hover {
+    background: rgba(0, 255, 136, 0.12) !important;
+    border-color: #00ff88 !important;
+}
+.blog-category-select > div:nth-child(6) label:hover {
+    background: rgba(255, 107, 107, 0.12) !important;
+    border-color: #ff6b6b !important;
+}
+
+/* 标签按钮组 - 每个按钮默认带颜色预览 */
+.blog-tags-select {
+    display: flex !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    margin-bottom: 16px !important;
+}
+
+.blog-tags-select > div {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.blog-tags-select label {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 10px 20px !important;
+    background: rgba(20, 25, 50, 0.6) !important;
+    border: 1px solid var(--tech-border) !important;
+    border-radius: 8px !important;
+    color: var(--tech-text-bright) !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 14px !important;
+}
+
+/* 标签默认状态 - 每个按钮用对应颜色边框 */
+.blog-tags-select > div:nth-child(1) label {
+    border-color: rgba(0, 217, 255, 0.5) !important;
+}
+.blog-tags-select > div:nth-child(2) label {
+    border-color: rgba(180, 100, 255, 0.5) !important;
+}
+.blog-tags-select > div:nth-child(3) label {
+    border-color: rgba(255, 107, 157, 0.5) !important;
+}
+.blog-tags-select > div:nth-child(4) label {
+    border-color: rgba(255, 217, 61, 0.5) !important;
+}
+.blog-tags-select > div:nth-child(5) label {
+    border-color: rgba(0, 255, 136, 0.5) !important;
+}
+.blog-tags-select > div:nth-child(6) label {
+    border-color: rgba(255, 107, 107, 0.5) !important;
+}
+
+.blog-tags-select label:hover {
+    transform: translateY(-2px) !important;
+}
+
+.blog-tags-select > div:nth-child(1) label:hover {
+    background: rgba(0, 217, 255, 0.12) !important;
+    border-color: #00d9ff !important;
+}
+.blog-tags-select > div:nth-child(2) label:hover {
+    background: rgba(180, 100, 255, 0.12) !important;
+    border-color: #b464ff !important;
+}
+.blog-tags-select > div:nth-child(3) label:hover {
+    background: rgba(255, 107, 157, 0.12) !important;
+    border-color: #ff6b9d !important;
+}
+.blog-tags-select > div:nth-child(4) label:hover {
+    background: rgba(255, 217, 61, 0.12) !important;
+    border-color: #ffd93d !important;
+}
+.blog-tags-select > div:nth-child(5) label:hover {
+    background: rgba(0, 255, 136, 0.12) !important;
+    border-color: #00ff88 !important;
+}
+.blog-tags-select > div:nth-child(6) label:hover {
+    background: rgba(255, 107, 107, 0.12) !important;
+    border-color: #ff6b6b !important;
+}
+
+/* ========== 分类选中状态 - 每个按钮颜色不同 ========== */
+.blog-category-select > div:nth-child(1) label.active {
+    background: linear-gradient(135deg, #00d9ff, #00a8ff) !important;
+    border-color: #00d9ff !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(0, 217, 255, 0.5) !important;
+}
+
+.blog-category-select > div:nth-child(2) label.active {
+    background: linear-gradient(135deg, #b464ff, #8b5cf6) !important;
+    border-color: #b464ff !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(180, 100, 255, 0.5) !important;
+}
+
+.blog-category-select > div:nth-child(3) label.active {
+    background: linear-gradient(135deg, #ff6b9d, #ff4785) !important;
+    border-color: #ff6b9d !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(255, 107, 157, 0.5) !important;
+}
+
+.blog-category-select > div:nth-child(4) label.active {
+    background: linear-gradient(135deg, #ffd93d, #ff9500) !important;
+    border-color: #ffd93d !important;
+    color: #1a1a2e !important;
+    box-shadow: 0 0 18px rgba(255, 217, 61, 0.5) !important;
+}
+
+.blog-category-select > div:nth-child(5) label.active {
+    background: linear-gradient(135deg, #00ff88, #00c66e) !important;
+    border-color: #00ff88 !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(0, 255, 136, 0.5) !important;
+}
+
+.blog-category-select > div:nth-child(6) label.active {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52) !important;
+    border-color: #ff6b6b !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(255, 107, 107, 0.5) !important;
+}
+
+.blog-category-select > div:nth-child(n+7) label.active {
+    background: linear-gradient(135deg, #00d9ff, #b464ff) !important;
+    border-color: #00d9ff !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(0, 217, 255, 0.5) !important;
+}
+
+/* ========== 标签选中状态 - 每个按钮颜色不同 ========== */
+.blog-tags-select > div:nth-child(1) label.active {
+    background: linear-gradient(135deg, #00d9ff, #00a8ff) !important;
+    border-color: #00d9ff !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(0, 217, 255, 0.5) !important;
+}
+
+.blog-tags-select > div:nth-child(2) label.active {
+    background: linear-gradient(135deg, #b464ff, #8b5cf6) !important;
+    border-color: #b464ff !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(180, 100, 255, 0.5) !important;
+}
+
+.blog-tags-select > div:nth-child(3) label.active {
+    background: linear-gradient(135deg, #ff6b9d, #ff4785) !important;
+    border-color: #ff6b9d !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(255, 107, 157, 0.5) !important;
+}
+
+.blog-tags-select > div:nth-child(4) label.active {
+    background: linear-gradient(135deg, #ffd93d, #ff9500) !important;
+    border-color: #ffd93d !important;
+    color: #1a1a2e !important;
+    box-shadow: 0 0 18px rgba(255, 217, 61, 0.5) !important;
+}
+
+.blog-tags-select > div:nth-child(5) label.active {
+    background: linear-gradient(135deg, #00ff88, #00c66e) !important;
+    border-color: #00ff88 !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(0, 255, 136, 0.5) !important;
+}
+
+.blog-tags-select > div:nth-child(6) label.active {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52) !important;
+    border-color: #ff6b6b !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(255, 107, 107, 0.5) !important;
+}
+
+.blog-tags-select > div:nth-child(n+7) label.active {
+    background: linear-gradient(135deg, #00d9ff, #b464ff) !important;
+    border-color: #00d9ff !important;
+    color: #fff !important;
+    box-shadow: 0 0 18px rgba(0, 217, 255, 0.5) !important;
+}
+
+/* Django Select 组件样式 */
+select.form-select {
+    background-color: rgba(20, 25, 50, 0.8) !important;
+    border: 1px solid var(--tech-border) !important;
+    color: var(--tech-text-bright) !important;
+}
+
+select.form-select option {
+    background: var(--tech-bg-card) !important;
+    color: var(--tech-text-bright) !important;
+}
+
+/* Django Textarea 组件样式 */
+textarea.form-control {
+    background: rgba(20, 25, 50, 0.8) !important;
+    border: 1px solid var(--tech-border) !important;
+    color: var(--tech-text-bright) !important;
+}
+
+/* 日期输入框 placeholder 颜色 */
+input[type="date"] {
+    color-scheme: dark !important;
+    color: var(--tech-text-bright) !important;
+}
+
+input[type="date"]:invalid::-webkit-datetime-edit,
+input[type="date"]::-webkit-datetime-edit {
+    color: var(--tech-text-bright) !important;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    background: transparent !important;
+}
+
+/* 通用输入框 placeholder */
+input::placeholder,
+textarea::placeholder {
+    color: rgba(200, 210, 230, 0.5) !important;
+}
+
+/* Django 表单内所有 label 颜色 */
+form .form-label,
+form label {
+    color: var(--tech-text-bright) !important;
+}
+
+/* Django 帮助文字颜色 */
+form .help-text,
+form .form-text,
+form small.help-text {
+    color: var(--tech-text-dim) !important;
+}
+
+/* Django 错误消息颜色 */
+form .invalid-feedback,
+form .errorlist {
+    color: var(--tech-danger) !important;
+}
+
+/* ========================================
+   Django ClearableFileInput 组件 - 文字颜色修复
+   ======================================== */
+
+/* 模态框内所有文字继承亮色 - 通过父容器设置 */
+.tech-modal .modal-content,
+.tech-modal .modal-header,
+.tech-modal .modal-body,
+.tech-modal .modal-footer {
+    color: var(--tech-text-bright) !important;
+}
+
+/* 模态框内链接使用青色（文件名等） */
+.tech-modal .modal-content a {
+    color: var(--tech-cyan) !important;
+}
+
+/* 文件上传区域 - 蓝紫渐变样式 */
+.tech-modal input[type="file"] {
+    position: relative;
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 16px 12px 100px !important;
+    background: rgba(20, 25, 50, 0.8) !important;
+    border: 1px solid var(--tech-border) !important;
+    border-radius: 8px !important;
+    color: var(--tech-text-bright) !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.tech-modal input[type="file"]::before {
+    content: "⚡ 选择文件";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 92px;
+    height: 100%;
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%);
+    border-radius: 8px 0 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.tech-modal input[type="file"]::file-selector-button {
+    display: none;
+}
+
+.tech-modal input[type="file"]:hover,
+.tech-modal input[type="file"]:focus {
+    border-color: var(--tech-border) !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.tech-modal input[type="file"]:hover::before {
+    background: linear-gradient(135deg, #00eaff 0%, #c478ff 100%);
+}
+
+.tech-modal input[type="file"]:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.tech-modal input[type="file"]::placeholder {
+    color: var(--tech-text-dim);
+}
+
+/* 文件选中状态 - 保持蓝紫渐变 */
+.tech-modal input[type="file"]:valid::before {
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%);
+}
+
+.tech-modal input[type="file"]:valid {
+    border-color: var(--tech-border) !important;
+}
+
+/* ========================================
+   Tech Badge 样式 - 分类和标签展示
+   ======================================== */
+
+.tech-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 6px;
+    color: #fff;
+    background: linear-gradient(135deg, #00d9ff, #00a8ff);
+    box-shadow: 0 2px 8px rgba(0, 217, 255, 0.25);
+    margin-right: 4px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tech-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 217, 255, 0.4);
+}
+input[type="file"] {
+    position: relative;
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 16px 12px 100px !important;
+    background: rgba(20, 25, 50, 0.8) !important;
+    border: 1px solid var(--tech-border) !important;
+    border-radius: 8px !important;
+    color: var(--tech-text-bright) !important;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+input[type="file"]::before {
+    content: "⚡ 选择文件";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 92px;
+    height: 100%;
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%);
+    border-radius: 8px 0 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+input[type="file"]::file-selector-button {
+    display: none;
+}
+
+input[type="file"]:hover,
+input[type="file"]:focus {
+    border-color: var(--tech-border) !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+input[type="file"]:hover::before {
+    background: linear-gradient(135deg, #00eaff 0%, #c478ff 100%);
+}
+
+input[type="file"]:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+input[type="file"]::placeholder {
+    color: var(--tech-text-dim);
+}
+
+input[type="file"]:valid::before {
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%);
+}
+
+input[type="file"]:valid {
+    border-color: var(--tech-border) !important;
+}
+
+/* Tech Badge 样式 - 分类和标签展示 */
+.tech-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 6px;
+    color: #fff;
+    background: linear-gradient(135deg, #00d9ff, #00a8ff);
+    box-shadow: 0 2px 8px rgba(0, 217, 255, 0.25);
+    margin-right: 4px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+}
+
+.tech-badge:hover {
+    transform: translateY(-1px);
+}
+
+/* 返回按钮 - 主题蓝紫渐变 */
+.tech-back-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 14px rgba(0, 217, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.tech-back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(180, 100, 255, 0.45);
+    color: #fff;
+}
+
+/* 浮动新建博客按钮 */
+.fab-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--tech-cyan) 0%, var(--tech-purple) 100%);
+    color: #fff;
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 6px 24px rgba(0, 217, 255, 0.4);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.fab-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(180, 100, 255, 0.5);
+    color: #fff;
+}
+
+.fab-btn:active {
+    transform: scale(0.95);
+}

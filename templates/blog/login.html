@@ -1,0 +1,72 @@
+{% extends 'blog/base.html' %}
+{% load i18n %}
+
+{% block title %}⟨ LOGIN ⟩ {% trans "登录系统" %}{% endblock %}
+
+{% block show_nav %}{% endblock %}
+{% block show_footer %}{% endblock %}
+
+{% block content %}
+<div class="container py-5 min-vh-100">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-md-7 col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-body p-4 p-md-5">
+          <h1 class="h3 text-center mb-4 tech-glow">// {% trans "账号登录" %}</h1>
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              {% trans "账号或密码不正确，请重新输入。" %}
+            </div>
+          {% endif %}
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {% if next %}
+              <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.username.id_for_label }}">{% trans "账号" %}</label>
+              <input
+                class="form-control{% if form.username.errors %} is-invalid{% endif %}"
+                id="{{ form.username.id_for_label }}"
+                name="{{ form.username.html_name }}"
+                type="text"
+                value="{{ form.username.value|default:'' }}"
+                autocomplete="username"
+                autofocus
+                required
+              >
+              {% for error in form.username.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label" for="{{ form.password.id_for_label }}">{% trans "密码" %}</label>
+              <input
+                class="form-control{% if form.password.errors %} is-invalid{% endif %}"
+                id="{{ form.password.id_for_label }}"
+                name="{{ form.password.html_name }}"
+                type="password"
+                autocomplete="current-password"
+                required
+              >
+              {% for error in form.password.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <button class="btn btn-primary w-100" type="submit">► {% trans "登录" %}</button>
+            <p class="text-center mt-3 mb-0" style="color: var(--tech-text-bright); font-weight: 500;">
+              // {% trans "还没有账号？" %}
+              <a href="{% url 'blog:register' %}" style="color: var(--tech-cyan); font-weight: 600;">{% trans "前往注册" %} →</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

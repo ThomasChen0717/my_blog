@@ -1,0 +1,117 @@
+{% extends 'blog/base.html' %}
+{% load i18n %}
+
+{% block title %}⟨ REGISTER ⟩ {% trans "创建账号" %}{% endblock %}
+
+{% block show_nav %}{% endblock %}
+{% block show_footer %}{% endblock %}
+
+{% block content %}
+<div class="container py-5 min-vh-100">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-md-7 col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-body p-4 p-md-5">
+          <h1 class="h3 text-center mb-4 tech-glow">// {% trans "账号注册" %}</h1>
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              {% for error in form.non_field_errors %}
+                <div>{{ error }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.username.id_for_label }}">{% trans "账号" %}</label>
+                <input
+                    class="form-control{% if form.username.errors %} is-invalid{% endif %}"
+                    id="{{ form.username.id_for_label }}"
+                    name="{{ form.username.html_name }}"
+                    type="text"
+                    value="{{ form.username.value|default:'' }}"
+                    autocomplete="username"
+                    autofocus
+                    required
+                >
+
+                {% for error in form.username.errors %}
+                    <div class="invalid-feedback">
+                    {{ error }}
+                    </div>
+                {% endfor %}
+
+                {% if form.username.help_text %}
+                    <div class="form-text">
+                    {{ form.username.help_text }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.password1.id_for_label }}">{% trans "密码" %}</label>
+              <input
+                class="form-control{% if form.password1.errors %} is-invalid{% endif %}"
+                id="{{ form.password1.id_for_label }}"
+                name="{{ form.password1.html_name }}"
+                type="password"
+                autocomplete="new-password"
+                required
+              >
+
+              {% for error in form.password1.errors %}
+                <div class="invalid-feedback">
+                  {{ error }}
+                </div>
+              {% endfor %}
+
+              {% if form.password1.help_text %}
+                <div class="form-text">
+                  {{ form.password1.help_text }}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label" for="{{ form.password2.id_for_label }}">{% trans "确认密码" %}</label>
+              <input
+                class="form-control{% if form.password2.errors %} is-invalid{% endif %}"
+                id="{{ form.password2.id_for_label }}"
+                name="{{ form.password2.html_name }}"
+                type="password"
+                autocomplete="current-password"
+                required
+              >
+
+              {% for error in form.password2.errors %}
+                <div class="invalid-feedback">
+                  {{ error }}
+                </div>
+              {% endfor %}
+
+              {% if form.password2.help_text %}
+                <div class="form-text">
+                  {{ form.password2.help_text }}
+                </div>
+              {% endif %}
+            </div>
+
+            <button class="btn btn-primary w-100" type="submit">► {% trans "注册" %}</button>
+          </form>
+
+          <p class="text-center mt-3 mb-0" style="color: var(--tech-text-bright); font-weight: 500;">
+            // {% trans "已有账号？" %}
+            <a href="{% url 'blog:login' %}" style="color: var(--tech-cyan); font-weight: 600;">{% trans "前往登录" %} →</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

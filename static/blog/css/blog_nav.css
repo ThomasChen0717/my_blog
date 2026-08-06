@@ -1,0 +1,237 @@
+/* 导航栏样式 - 多彩科技感主题 */
+
+/* 强制横向布局 - 所有尺寸都显示为横版 */
+.navbar {
+    --bs-navbar-toggler-icon-bg: none;
+}
+
+.navbar .navbar-collapse {
+    display: flex !important;
+    flex-grow: 1;
+    align-items: stretch;
+    width: 100%;
+}
+
+.navbar .navbar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch;
+    gap: 0;
+}
+
+.navbar .navbar-nav.me-auto,
+.navbar .navbar-nav.ms-auto {
+    width: 100%;
+    margin: 0 !important;
+}
+
+/* 隐藏移动端折叠按钮 - 始终展开 */
+.navbar .navbar-toggler {
+    display: none !important;
+}
+
+/* 统一的导航菜单项样式 - 覆盖整行高度 */
+.navbar-nav .nav-item {
+    flex: 1;
+}
+
+.navbar-nav .nav-link,
+.navbar-nav button.nav-link {
+    position: relative;
+    padding: 0 18px !important;
+    height: 100%;
+    line-height: 56px;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    background: transparent;
+    cursor: pointer;
+    margin: 0;
+    min-width: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 统一的 hover 效果 - 覆盖整行 */
+.navbar-nav .nav-link:hover,
+.navbar-nav button.nav-link:hover {
+    background: linear-gradient(180deg, rgba(0, 217, 255, 0.25) 0%, rgba(180, 100, 255, 0.25) 100%);
+    color: #ffffff !important;
+    box-shadow: inset 0 0 20px rgba(0, 217, 255, 0.2);
+}
+
+/* 统一的 active 效果 */
+.navbar-nav .nav-link.active,
+.navbar-nav button.nav-link.active {
+    background: linear-gradient(180deg, rgba(0, 217, 255, 0.3) 0%, rgba(180, 100, 255, 0.3) 100%);
+    color: var(--tech-text-bright) !important;
+    box-shadow: inset 0 0 20px rgba(0, 217, 255, 0.3);
+    border-bottom: 2px solid var(--tech-cyan);
+}
+
+/* 登出表单样式 */
+.navbar-nav .nav-item form {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* 确保登出按钮不受 Bootstrap btn 类影响 */
+.navbar-nav .nav-item button.btn.nav-link,
+.navbar-nav .nav-item form button.nav-link {
+    padding: 0 18px !important;
+    height: 100%;
+    width: 100%;
+    line-height: 56px;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-nav .nav-item button.btn.nav-link:hover {
+    background: linear-gradient(180deg, rgba(0, 217, 255, 0.25) 0%, rgba(180, 100, 255, 0.25) 100%) !important;
+    color: #ffffff !important;
+    box-shadow: inset 0 0 20px rgba(0, 217, 255, 0.2);
+}
+
+.navbar-nav .nav-item button.btn.nav-link:focus {
+    outline: none;
+}
+
+/* 导航栏高度统一 */
+.navbar {
+    min-height: 56px;
+}
+
+.navbar-collapse {
+    height: auto;
+}
+
+/* 导航栏 toggle 按钮 - 超亮显示 */
+.navbar-toggler {
+    background: rgba(0, 217, 255, 0.25) !important;
+    border: 1px solid rgba(0, 217, 255, 0.6) !important;
+    color: #ffffff !important;
+    padding: 10px 14px !important;
+    border-radius: 6px;
+}
+
+.navbar-toggler-icon {
+    filter: brightness(2.5) saturate(1.5) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%2300ffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+.navbar-toggler:hover {
+    background: rgba(0, 217, 255, 0.35) !important;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+}
+
+.navbar-toggler:focus {
+    outline: none !important;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.5) !important;
+}
+
+/* 页脚样式 */
+footer {
+    font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+}
+
+footer .nav-link {
+    transition: all 0.3s ease;
+}
+
+footer .nav-link:hover {
+    transform: translateY(-2px);
+}
+
+/* 导航栏搜索框 */
+.navbar .d-flex {
+    padding: 0;
+}
+
+/* 品牌文字动画 */
+.navbar-brand {
+    transition: all 0.3s ease;
+    height: 56px;
+    line-height: 56px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.navbar-brand:hover {
+    filter: drop-shadow(0 0 15px rgba(0, 217, 255, 0.8)) brightness(1.1);
+}
+
+/* ========================================
+   移动端响应式样式（保留但不强制纵向）
+   ======================================== */
+@media (max-width: 991px) {
+    /* 移动端保持横向布局 */
+    .navbar-collapse {
+        background: transparent;
+        border-top: none;
+        border-bottom: none;
+        box-shadow: none;
+        padding: 0;
+        margin-top: 0;
+    }
+
+    .navbar-nav .nav-link,
+    .navbar-nav button.nav-link {
+        display: inline-flex;
+        width: auto;
+        height: 56px;
+        line-height: 56px;
+        padding: 0 14px !important;
+        text-align: center;
+        border-bottom: none;
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav button.nav-link:hover {
+        background: linear-gradient(180deg, rgba(0, 217, 255, 0.25) 0%, rgba(180, 100, 255, 0.25) 100%);
+        box-shadow: inset 0 0 20px rgba(0, 217, 255, 0.2);
+    }
+
+    .navbar-nav .nav-link.active,
+    .navbar-nav button.nav-link.active {
+        background: linear-gradient(180deg, rgba(0, 217, 255, 0.3) 0%, rgba(180, 100, 255, 0.3) 100%);
+        border-bottom: 2px solid var(--tech-cyan);
+        box-shadow: inset 0 0 20px rgba(0, 217, 255, 0.3);
+    }
+
+    .navbar-nav .nav-item form {
+        display: inline-flex;
+        width: auto;
+        height: 56px;
+    }
+
+    .navbar-nav .nav-item button.btn.nav-link,
+    .navbar-nav .nav-item form button.nav-link {
+        display: inline-flex;
+        width: auto;
+        height: 56px;
+        line-height: 56px;
+        padding: 0 14px !important;
+        text-align: center;
+    }
+
+    .navbar .d-flex {
+        padding: 0;
+        width: auto;
+    }
+
+    .navbar .d-flex .form-control {
+        flex: 1;
+    }
+}

@@ -1,0 +1,228 @@
+{% extends 'blog/base.html' %}
+{% load i18n %}
+
+{% block title %}⟨ CODE BLOG ⟩ - {% trans "博客首页" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h1 class="text-center mb-4 tech-glow">// {% trans "博客文章列表" %}</h1>
+
+            {# 搜索、过滤、排序工具栏 #}
+            <div class="card mb-4 tech-toolbar">
+                <div class="card-body p-3">
+                    <form method="get" id="filterForm">
+                        {# 第一行：搜索框 #}
+                        <div class="row g-2 mb-2">
+                            <div class="col-12">
+                                <div class="input-group tech-input-group">
+                                    <input type="text" class="form-control tech-search-input" name="q" 
+                                           placeholder="{% trans '搜索标题、正文、标签、用户...' %}" 
+                                           value="{{ search_query }}">
+                                    <button class="btn tech-search-btn" type="submit">🔍 {% trans "搜索" %}</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {# 第二行：筛选和排序 #}
+                        <div class="row g-2 align-items-center">
+                            {# 分类过滤 #}
+                            <div class="col">
+                                <div class="tech-dropdown" data-dropdown>
+                                    <button type="button" class="tech-dropdown-toggle" data-toggle>
+                                        <span class="tech-dropdown-label">📂 {% trans "全部分类" %}</span>
+                                        <span class="tech-dropdown-arrow">▾</span>
+                                    </button>
+                                    <div class="tech-dropdown-menu" data-menu>
+                                        <a href="#" class="tech-dropdown-item {% if not current_category %}active{% endif %}" data-value="">{% trans "全部分类" %}</a>
+                                        {% for cat in categories %}
+                                            <a href="#" class="tech-dropdown-item {% if current_category == cat.id|stringformat:'s' %}active{% endif %}" data-value="{{ cat.id }}">{{ cat.get_name }}</a>
+                                        {% endfor %}
+                                    </div>
+                                    <input type="hidden" name="category" value="{{ current_category }}">
+                                </div>
+                            </div>
+
+                            {# 排序 #}
+                            <div class="col">
+                                <div class="tech-dropdown" data-dropdown>
+                                    <button type="button" class="tech-dropdown-toggle" data-toggle>
+                                        <span class="tech-dropdown-label">⏱ {% if current_sort == 'visitors' %}{% trans "按浏览量" %}{% else %}{% trans "按时间" %}{% endif %}</span>
+                                        <span class="tech-dropdown-arrow">▾</span>
+                                    </button>
+                                    <div class="tech-dropdown-menu" data-menu>
+                                        <a href="#" class="tech-dropdown-item {% if current_sort == 'time' %}active{% endif %}" data-value="time">{% trans "按时间" %}</a>
+                                        <a href="#" class="tech-dropdown-item {% if current_sort == 'visitors' %}active{% endif %}" data-value="visitors">{% trans "按浏览量" %}</a>
+                                    </div>
+                                    <input type="hidden" name="sort" value="{{ current_sort }}">
+                                </div>
+                            </div>
+
+                            {# 排序方向 #}
+                            <div class="col">
+                                <div class="tech-dropdown" data-dropdown>
+                                    <button type="button" class="tech-dropdown-toggle" data-toggle>
+                                        <span class="tech-dropdown-label">{% if current_dir == 'asc' %}↑ {% trans "升序" %}{% else %}↓ {% trans "降序" %}{% endif %}</span>
+                                        <span class="tech-dropdown-arrow">▾</span>
+                                    </button>
+                                    <div class="tech-dropdown-menu" data-menu>
+                                        <a href="#" class="tech-dropdown-item {% if current_dir == 'desc' %}active{% endif %}" data-value="desc">↓ {% trans "降序" %}</a>
+                                        <a href="#" class="tech-dropdown-item {% if current_dir == 'asc' %}active{% endif %}" data-value="asc">↑ {% trans "升序" %}</a>
+                                    </div>
+                                    <input type="hidden" name="dir" value="{{ current_dir }}">
+                                </div>
+                            </div>
+
+                            {# 清除筛选按钮 #}
+                            {% if search_query or current_category %}
+                            <div class="col-auto">
+                                <a href="{% url 'blog:blog_index' %}" class="btn tech-clear-btn">✕ {% trans "清除" %}</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {# 搜索结果提示 #}
+            {% if search_query or current_category %}
+            <div class="alert alert-info">
+                {% if search_query %}
+                    {% blocktrans %}搜索 "<strong>{{ search_query }}</strong>" 的结果{% endblocktrans %}
+                {% endif %}
+                {% blocktrans %}共找到 <strong>{{ blog_list|length }}</strong> 篇文章{% endblocktrans %}
+            </div>
+            {% endif %}
+
+            {# 博客列表 #}
+            {% for blog in blog_list %}
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            <a href="{% url 'blog:blog_detail' blog.id %}" class="text-decoration-none">{{ blog.title }}</a>
+                        </h2>
+                        {% if blog.img %}
+                            <div class="text-center my-3">
+                                <img src="{{ blog.img.url }}" class="img-fluid" alt="{{ blog.title }}">
+                            </div>
+                        {% endif %}
+                        <p class="text-muted">
+                            {% trans "作者：" %}<a href="{% url 'blog:user_profile' blog.author.id %}">{{ blog.author.username }}</a> | 
+                            {% trans "发布时间：" %}{{ blog.created_time|date:"Y-m-d" }} |
+                            {% trans "访问量：" %}{{ blog.visitors }}
+                        </p>
+                        <p class="card-text">
+                            {{ blog.abstract|default:blog.body|truncatechars:100 }}
+                        </p>
+                        <div class="mb-2">
+                            {% if blog.category %}
+                                <span class="tech-badge">{{ blog.category.get_name }}</span>
+                            {% endif %}
+                            {% for tag in blog.tags.all %}
+                                <span class="tech-badge">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                        <a href="{% url 'blog:blog_detail' blog.id %}" class="btn btn-primary">
+                            ▸ {% trans "阅读全文" %} →
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="text-center py-5">
+                    {% if search_query or current_category %}
+                        <p class="text-muted">{% trans "没有找到符合条件的文章。" %}</p>
+                        <a href="{% url 'blog:blog_index' %}" class="btn btn-outline-primary">{% trans "查看所有文章" %}</a>
+                    {% else %}
+                        <p class="text-muted">{% trans "还没有发布任何文章。" %}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {# 新建博客浮动按钮 #}
+            {% if user.is_authenticated %}
+            <a href="{% url 'blog:add_blog' %}" class="fab-btn" title="{% trans '新建博客' %}">+</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+// 自定义下拉菜单交互
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('[data-dropdown]');
+    
+    // 点击切换下拉菜单
+    dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('[data-toggle]');
+        const items = dropdown.querySelectorAll('[data-menu] .tech-dropdown-item');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+        const label = dropdown.querySelector('.tech-dropdown-label');
+        
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = dropdown.getAttribute('data-open') === 'true';
+            
+            // 关闭其他下拉菜单
+            dropdowns.forEach(other => {
+                if (other !== dropdown) {
+                    other.setAttribute('data-open', 'false');
+                }
+            });
+            
+            dropdown.setAttribute('data-open', !isOpen ? 'true' : 'false');
+        });
+        
+        // 选择选项
+        items.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const value = item.getAttribute('data-value');
+                const text = item.textContent.trim();
+                
+                // 更新隐藏输入
+                if (hiddenInput) {
+                    hiddenInput.value = value;
+                }
+                
+                // 更新显示文字
+                if (label) {
+                    label.textContent = text;
+                }
+                
+                // 更新激活状态
+                items.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                
+                // 关闭下拉菜单
+                dropdown.setAttribute('data-open', 'false');
+                
+                // 提交表单
+                const form = document.getElementById('filterForm');
+                if (form) {
+                    form.submit();
+                }
+            });
+        });
+    });
+    
+    // 点击其他地方关闭下拉菜单
+    document.addEventListener('click', function() {
+        dropdowns.forEach(dropdown => {
+            dropdown.setAttribute('data-open', 'false');
+        });
+    });
+    
+    // 搜索按钮提交
+    const searchBtn = document.querySelector('.tech-search-btn');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', function() {
+            const form = document.getElementById('filterForm');
+            if (form) {
+                form.submit();
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

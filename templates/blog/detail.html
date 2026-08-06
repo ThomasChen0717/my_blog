@@ -1,0 +1,49 @@
+{% extends 'blog/base.html' %}
+{% load i18n %}
+
+{% block title %}⟨ {{ blog.title }} ⟩{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <a href="{% url 'blog:blog_index' %}" class="tech-back-btn">◄ {% trans "返回主页" %}</a>
+        <div class="row">
+            <div class="col-md-9">
+                <h1 class="tech-glow">{{ blog.title }}</h1>
+                {% if blog.toc and '<li>' in blog.toc %}
+                    <div class="toc">
+                        <h5>{% trans "文章目录" %}</h5>
+                        {{ blog.toc|safe }}
+                    </div>
+                    <hr>
+                {% endif %}
+                <p>
+                    <strong><a href="{% url 'blog:user_profile' blog.author.id %}">{{ blog.author }}</a></strong>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{ blog.created_time|date:'Y年m月d日' }}
+                    &nbsp;&nbsp;&nbsp;&nbsp;{% trans "分类：" %}
+                    {% if blog.category %}
+                        &nbsp;&nbsp;<span class="tech-badge">{{ blog.category.get_name }}</span>
+                    {% endif %}
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;{% trans "标签：" %}
+                    {% for tag in blog.tags.all %}
+                        &nbsp;&nbsp;<span class="tech-badge">{{ tag.name }}</span>
+                    {% endfor %}
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;{% trans "浏览量：" %}
+                            &nbsp;&nbsp;{{ blog.visitors }}
+
+                    {% if blog.img %}
+                        <div class="text-center my-3">
+                            <img src="{{ blog.img.url }}" class="img-fluid" alt="{{ blog.title }}">
+                        </div>
+                    {% endif %}
+                    <hr />  
+                    <div class="blog-content">
+                        {{ blog.body|safe }}
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

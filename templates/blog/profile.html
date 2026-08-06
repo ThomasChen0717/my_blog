@@ -1,0 +1,182 @@
+{% extends 'blog/base.html' %}
+{% load static i18n %}
+
+{% block title %}⟨ {{ profile_user.username }} ⟩ {% trans "的主页" %}{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        {# 左侧：个人资料 #}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    {% if profile_obj.avatar %}
+                        <img src="{{ profile_obj.avatar.url }}" class="rounded-circle mb-3" width="120" height="120" alt="{% trans '头像' %}">
+                    {% else %}
+                        <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width:120px;height:120px;font-size:3rem;">
+                            {{ profile_user.username|first|upper }}
+                        </div>
+                    {% endif %}
+                    <h4 class="tech-glow">{{ profile_user.username }}</h4>
+                    <p class="text-muted mb-0">// {% blocktrans %}已发布 {{ blog_count }} 篇博客{% endblocktrans %}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% if profile_obj.birthday %}
+                        <li class="list-group-item"><strong>{% trans "► 生日：" %}</strong>{{ profile_obj.birthday|date:"Y年m月d日" }}</li>
+                    {% endif %}
+                    {% if profile_obj.gender %}
+                        <li class="list-group-item"><strong>{% trans "► 性别：" %}</strong>{{ profile_obj.get_gender_display }}</li>
+                    {% endif %}
+                    {% if profile_obj.city %}
+                        <li class="list-group-item"><strong>{% trans "► 城市：" %}</strong>{{ profile_obj.city }}</li>
+                    {% endif %}
+                    {% if profile_obj.occupation %}
+                        <li class="list-group-item"><strong>{% trans "► 工作：" %}</strong>{{ profile_obj.occupation }}</li>
+                    {% endif %}
+                    {% if profile_obj.bio %}
+                        <li class="list-group-item"><strong>{% trans "► 简介：" %}</strong>{{ profile_obj.bio }}</li>
+                    {% endif %}
+                    <li class="list-group-item"><strong>{% trans "► 注册时间：" %}</strong>{{ profile_user.date_joined|date:"Y年m月d日" }}</li>
+                </ul>
+
+                {# 编辑资料按钮 - 仅作者本人可见 #}
+                {% if is_owner and form %}
+                <div class="card-body border-top border-tech-border">
+                    <button type="button" class="btn btn-primary w-100 tech-edit-btn" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        ⚡ {% trans "编辑个人资料" %}
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {# 右侧：博客列表 #}
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="tech-glow">// {{ profile_user.username }}{% trans "的博客" %}</h3>
+                {% if is_owner %}
+                    <a href="{% url 'blog:add_blog' %}" class="btn btn-primary">⚡ {% trans "发布新博客" %}</a>
+                {% endif %}
+            </div>
+
+            {% for blog in user_blogs %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">{{ blog.title }}</h5>
+                            <small class="text-muted">{{ blog.created_time|date:"Y-m-d H:i" }}</small>
+                        </div>
+                        {% if blog.img %}
+                            <img src="{{ blog.img.url }}" class="img-fluid mb-2" style="max-height:150px;" alt="{{ blog.title }}">
+                        {% endif %}
+                        <p class="card-text">{{ blog.abstract|default:blog.body|truncatechars:150 }}</p>
+                        <div class="mb-2">
+                            {% if blog.category %}
+                                <span class="tech-badge">{{ blog.category.get_name }}</span>
+                            {% endif %}
+                            {% for tag in blog.tags.all %}
+                                <span class="tech-badge">{{ tag.name }}</span>
+                            {% endfor %}
+                            <small class="text-muted ms-2">[{{ blog.visitors }} {% trans "views" %}]</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'blog:blog_detail' blog.id %}" class="btn btn-sm btn-outline-primary">▸ {% trans "查看" %}</a>
+                            {% if is_owner %}
+                                <a href="{% url 'blog:edit_blog' blog.id %}" class="btn btn-sm btn-outline-warning">✎ {% trans "编辑" %}</a>
+                                <a href="{% url 'blog:delete_blog' blog.id %}" class="btn btn-sm btn-outline-danger">✕ {% trans "删除" %}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="text-center text-muted py-5">
+                    <p>// {% trans "还没有发布任何博客。" %}</p>
+                    {% if is_owner %}
+                        <a href="{% url 'blog:add_blog' %}" class="btn btn-primary">⚡ {% trans "立即发布第一篇" %}</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{# 编辑资料模态框 - 仅作者本人可见 #}
+{% if is_owner and form %}
+<div class="modal fade tech-modal" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title tech-glow" id="editProfileModalLabel">⚡ {% trans "编辑个人资料" %}</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="{% trans '关闭' %}"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="button" class="btn btn-secondary flex-grow-1" data-bs-dismiss="modal">{% trans "取消" %}</button>
+                        <button type="submit" class="btn btn-primary flex-grow-1">{% trans "保存资料" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function initClearCheckbox() {
+        // 找到所有清除 checkbox（id 以 _clear_id 结尾）
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][id$="-clear_id"]');
+        checkboxes.forEach(function(cb) {
+            // 跳过已处理的
+            if (cb.dataset.clearInit === '1') return;
+            cb.dataset.clearInit = '1';
+            
+            var label = document.querySelector('label[for="' + cb.id + '"]');
+            if (!label) return;
+            
+            // 隐藏原生 checkbox 和 label
+            cb.style.cssText = 'display:none !important;';
+            label.style.cssText = 'display:none !important;';
+            
+            // 创建新按钮
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'tech-clear-btn';
+            btn.textContent = '清除';
+            
+            if (cb.checked) {
+                btn.classList.add('active');
+            }
+            
+            btn.addEventListener('click', function() {
+                cb.checked = !cb.checked;
+                btn.classList.toggle('active');
+            });
+            
+            // 插入到 label 后面
+            label.parentNode.insertBefore(btn, label.nextSibling);
+        });
+    }
+
+    var modal = document.getElementById('editProfileModal');
+    if (modal) {
+        modal.addEventListener('shown.bs.modal', initClearCheckbox);
+    }
+    initClearCheckbox();
+});
+</script>
+{% endblock %}
