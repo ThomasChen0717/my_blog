@@ -9,6 +9,7 @@ pip install -r requirements.txt
 python manage.py collectstatic --noinput
 python manage.py migrate
 python manage.py compilemessages -l en
+python manage.py createsuperuser --noinput || true
 
 # 加载初始数据（分类、标签等），使用 update_or_create 避免冲突
 python manage.py shell -c "
